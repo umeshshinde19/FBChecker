@@ -21,4 +21,9 @@ Good Luck!
 
 ##### Authors
 
-[Mattia Quadrini](mailto:mattiaquadrini@gmail.com)
+[Umesh Shinde](mailto:umeshshinde850@gmail.com)
+
+### Donate!
+Support the authors: Umesh Shinde
+
+<noscript><a href="https://liberapay.com/umeshshinde19/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
